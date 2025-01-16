@@ -1,13 +1,20 @@
+import { useEffect } from 'react';
 import NavBar from "./components/NavBar"
-import Contact from "./components/Contact"
+import Hero from "./components/Hero"
 import About from "./components/About"
 import Project from "./components/Project"
+import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 
 function App() {
+  useEffect(() => {
+    document.documentElement.style.setProperty('scroll-padding-top', '80px');
+  }, []);
+
   return (
     <>
       <NavBar />
+      <Hero />
       <About />
       <Project />
       <Contact />
