@@ -1,0 +1,24 @@
+:root {
+    --primary-color: #5865F2;
+    --background-color: #001220;
+    --text-color: #ffffff;
+    --hover-color: #7983f5;
+    --glass-background: rgba(35, 39, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
