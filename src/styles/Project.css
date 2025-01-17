@@ -365,9 +365,9 @@
 
 .language-tooltip {
     position: absolute;
-    bottom: calc(100% + 8px);
+    bottom: 20px;
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%);
     background: var(--glass-background);
     backdrop-filter: blur(10px);
     padding: 6px 10px;
@@ -378,7 +378,7 @@
     visibility: hidden;
     transition: all 0.2s ease;
     border: 1px solid var(--glass-border);
-    z-index: 10;
+    z-index: 100;
     pointer-events: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -386,12 +386,12 @@
 .language-tooltip::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -5px;
     left: 50%;
     transform: translateX(-50%) rotate(45deg);
     width: 8px;
     height: 8px;
-    background: var(--glass-background);
+    background: inherit;
     border-right: 1px solid var(--glass-border);
     border-bottom: 1px solid var(--glass-border);
 }
@@ -403,7 +403,8 @@
 .language-item:hover .language-tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    bottom: 25px;
+    /* Adjusted hover position */
 }
 
 /* Pagination Styles */
