@@ -1,44 +1,62 @@
-# Portfolio Website
+# HitRecord's Portfolio Website
 
-A modern, responsive portfolio website built with React, Vite, Tailwind CSS, and Framer Motion.
+<div align="center">
+  <img src="./public/preview.png" alt="Portfolio Preview" width="600px">
+  
+  [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://h1trecord.github.io/Portfolio-Website)
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+</div>
 
-## 🚀 Features
+## ✨ Features
 
-- Responsive design that works on all devices
-- Smooth animations powered by Framer Motion
-- Dynamic typing effect
-- Real-time clock display with timezone
-- Interactive UI elements
-- Modern glass-morphism design
-- Social media integration
-- Animated wave decorations
+- **Modern Design**
+  - Glass-morphism UI elements
+  - Responsive layout for all devices
+  - Dynamic wave animations
+  - Clean typography with Poppins font
 
-## 🛠️ Technologies Used
+- **Interactive Elements**
+  - Smooth scroll animations
+  - Dynamic typing effect
+  - Real-time clock with PHT timezone
+  - Hover effects and transitions
 
-- React
-- Vite
-- Tailwind CSS
-- Framer Motion
-- Font Awesome
-- Google Fonts (Poppins)
+- **Developer-Friendly**
+  - Component-based architecture
+  - Well-organized file structure
+  - Easy to customize and extend
+  - Optimized performance
 
-## 📦 Installation
+## 🛠️ Tech Stack
 
-1. Clone the repository
-```bash
-git clone [your-repo-link]
-cd Portfolio-Website
-```
+- **Frontend Framework:** React 18 with Vite
+- **Styling:** CSS3 with Custom Properties
+- **Animations:** Custom CSS animations
+- **Icons:** Font Awesome 6
+- **Deployment:** GitHub Pages
 
-2. Install dependencies
-```bash
-npm install
-```
+## 🚀 Quick Start
 
-3. Start the development server
-```bash
-npm run dev
-```
+1. **Clone and Install**
+   ```bash
+   git clone https://h1trecord.github.io/Portfolio-Website.git
+   cd Portfolio-Website
+   npm install
+   ```
+
+2. **Development**
+   ```bash
+   npm run dev
+   # Server starts on http://localhost:5173
+   ```
+
+3. **Build**
+   ```bash
+   npm run build
+   npm run preview
+   ```
+
+## 📁 Project Structure
 
 ## 🔧 Environment Setup
 
@@ -49,8 +67,8 @@ Ensure you have the following installed:
 
 ## 🎨 Customization
 
-1. Update the profile information in `About.jsx`
-2. Modify colors in `index.css`
+1. Update the profile information in `components`
+2. Modify colors in `styles`
 3. Add your projects in the projects section
 4. Update social media links
 
@@ -66,9 +84,11 @@ This project is open source and available under the [MIT License](LICENSE)
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](your-issues-link).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/H1tRecord/Portfolio-Website/issues).
 
 ## 📬 Contact
 
-- GitHub: [@your-username](your-github-link)
-- Twitter: [@your-handle](your-twitter-link)
+- GitHub: [@H1tRecord](https://github.com/H1tRecord)
+- Twitter: [@HitRedcord](https://twitter.com/HitRedcord)
+- YouTube: [@hitrecordyt](https://www.youtube.com/@hitrecordyt)
+- Ko-fi: [HitRecord](https://ko-fi.com/hitrecord)
