@@ -2,31 +2,38 @@
     padding: 8rem 2rem 4rem;
     text-align: center;
     position: relative;
-    /* Remove background declaration */
 }
 
 .contact h2 {
     position: relative;
     z-index: 2;
-    /* Ensure title is above waves */
     font-size: 2.5rem;
     margin-bottom: 3rem;
     background: linear-gradient(45deg, var(--primary-color), var(--hover-color));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    opacity: 0;
+}
+
+.contact h2.animate {
+    animation: slideDown 0.8s ease forwards;
 }
 
 .contact-container {
     position: relative;
     z-index: 2;
-    /* Ensure content is above waves */
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    opacity: 0;
+}
+
+.contact-container.animate {
+    animation: fadeIn 0.8s ease forwards;
 }
 
 .contact-info {
@@ -37,13 +44,22 @@
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
     color: var(--primary-color);
+    opacity: 0;
+}
+
+.contact-info h3.animate {
+    animation: slideRight 0.8s ease forwards;
 }
 
 .contact-info p {
     margin-bottom: 1.5rem;
     line-height: 1.6;
     color: var(--text-color);
-    opacity: 0.9;
+    opacity: 0;
+}
+
+.contact-info p.animate {
+    animation: slideRight 0.8s ease forwards;
 }
 
 .contact-reasons {
@@ -57,6 +73,51 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    opacity: 0;
+}
+
+.contact-reasons li.animate {
+    animation: slideRight 0.8s ease forwards;
+}
+
+.contact-reasons li:nth-child(1) {
+    animation-delay: 0.6s;
+}
+
+.contact-reasons li:nth-child(1).animate {
+    animation-delay: 0.6s;
+}
+
+.contact-reasons li:nth-child(2) {
+    animation-delay: 0.7s;
+}
+
+.contact-reasons li:nth-child(2).animate {
+    animation-delay: 0.7s;
+}
+
+.contact-reasons li:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+.contact-reasons li:nth-child(3).animate {
+    animation-delay: 0.8s;
+}
+
+.contact-reasons li:nth-child(4) {
+    animation-delay: 0.9s;
+}
+
+.contact-reasons li:nth-child(4).animate {
+    animation-delay: 0.9s;
+}
+
+.contact-reasons li:nth-child(5) {
+    animation-delay: 1.0s;
+}
+
+.contact-reasons li:nth-child(5).animate {
+    animation-delay: 1.0s;
 }
 
 .contact-reasons i {
@@ -74,6 +135,35 @@
 
 .form-group {
     position: relative;
+    opacity: 0;
+}
+
+.form-group.animate {
+    animation: slideLeft 0.8s ease forwards;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.6s;
+}
+
+.form-group:nth-child(1).animate {
+    animation-delay: 0.6s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.7s;
+}
+
+.form-group:nth-child(2).animate {
+    animation-delay: 0.7s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+.form-group:nth-child(3).animate {
+    animation-delay: 0.8s;
 }
 
 .form-group input,
@@ -107,6 +197,11 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    opacity: 0;
+}
+
+.submit-btn.animate {
+    animation: fadeIn 0.8s ease forwards;
 }
 
 .submit-btn:hover:not(:disabled) {
@@ -229,6 +324,42 @@ footer {
     }
 }
 
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .contact-waves-top {
     position: absolute;
     top: -1px;
@@ -276,5 +407,24 @@ footer {
 
     .contact-reasons li {
         justify-content: center;
+    }
+
+    .contact-info h3,
+    .contact-info p,
+    .contact-reasons li,
+    .form-group {
+        animation-name: slideUp;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }

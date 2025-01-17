@@ -19,7 +19,7 @@ function Project() {
                     entries.forEach((entry, idx) => {
                         if (entry.isIntersecting) {
                             const card = entry.target;
-                            const delay = idx * 100; // Stagger animation
+                            const delay = idx * 100;
 
                             setTimeout(() => {
                                 card.classList.add('visible');
@@ -35,7 +35,6 @@ function Project() {
                 }
             );
 
-            // Observe all project cards
             const cards = document.querySelectorAll('.project-card');
             cards.forEach(card => observer.observe(card));
 
@@ -59,7 +58,6 @@ function Project() {
             const response = await fetch('https://api.github.com/users/H1tRecord/repos');
             const data = await response.json();
 
-            // Fetch languages and sort by stars
             const projectsWithLanguages = await Promise.all(data.map(async (repo) => {
                 const langResponse = await fetch(repo.languages_url);
                 const languages = await langResponse.json();
@@ -89,7 +87,6 @@ function Project() {
         }
     };
 
-    // Pagination logic
     const indexOfLastProject = currentPage * projectsPerPage;
     const indexOfFirstProject = indexOfLastProject - projectsPerPage;
     const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
@@ -97,7 +94,16 @@ function Project() {
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
-        window.scrollTo(0, 0);
+        // Add a small delay to ensure state update before scrolling
+        setTimeout(() => {
+            const projectsSection = document.getElementById('projects');
+            if (projectsSection) {
+                projectsSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }, 100);
     };
 
     return (
@@ -148,7 +154,6 @@ function Project() {
                             <h3 className="project-title">{project.name}</h3>
                             <p className="project-description">{project.description || 'No description available'}</p>
 
-                            {/* Update the languages bar section */}
                             <div className="languages-bar" role="list" aria-label="Project languages">
                                 {project.languages?.map(({ name, percentage }) => (
                                     <div

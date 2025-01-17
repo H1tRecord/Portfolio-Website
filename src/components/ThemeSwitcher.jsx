@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import '../styles/ThemeSwitcher.css';
 import flashVideo from '../assets/flash.mp4';
 
 const THEMES = [
@@ -6,7 +7,7 @@ const THEMES = [
     { id: 'light', name: 'Light', icon: '☀️' },
     { id: 'cherry', name: 'Cherry Blossom', icon: '🌸' },
     { id: 'ocean', name: 'Ocean Drift', icon: '🌊' },
-    { id: 'emerald', name: 'Emerald Trail', icon: '🌿' }
+    { id: 'amber', name: 'Amber Sunset', icon: '🌅' }
 ];
 
 function ThemeSwitcher() {
@@ -19,7 +20,7 @@ function ThemeSwitcher() {
     const warningMessages = [
         {
             title: "Wait! Are you sure?",
-            message: "Light mode might hurt your developer eyes! 👀"
+            message: "Light mode might hurt your eyes! 👀"
         },
         {
             title: "Last Chance!",

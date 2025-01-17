@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/Contact.css';
 
 function Contact() {
@@ -9,7 +9,28 @@ function Contact() {
     const [lastSubmissionTime, setLastSubmissionTime] = useState(0);
 
     const SUBMISSION_LIMIT = 3;
-    const TIME_WINDOW = 5 * 60 * 1000; // 5 minutes
+    const TIME_WINDOW = 5 * 60 * 1000;
+
+    useEffect(() => {
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        const animatedElements = document.querySelectorAll('.contact h2, .contact-container, .contact-info h3, .contact-info p, .contact-reasons li, .form-group, .submit-btn');
+
+        animatedElements.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

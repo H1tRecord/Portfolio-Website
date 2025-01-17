@@ -60,7 +60,7 @@ function Hero() {
     }, []);
 
     return (
-        <section id="home" className="hero"> {/* Changed from "about" to "home" */}
+        <section id="home" className="hero">
             <div className="hero-background">
                 <div className="hero-waves-top">
                     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">

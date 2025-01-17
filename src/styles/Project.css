@@ -21,7 +21,7 @@
 
 .section-caption {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color);
     margin: -1rem 0 3rem;
     text-align: center;
 }
@@ -345,9 +345,14 @@
     margin: 1.5rem 0;
     background: var(--glass-background);
     position: relative;
-    transform: scaleX(0.8);
     opacity: 0;
-    transition: all 0.4s ease;
+    transform: scaleX(0.8);
+    transition: all 0.4s ease 0.2s;
+}
+
+.project-card.visible .languages-bar {
+    opacity: 1;
+    transform: scaleX(1);
 }
 
 .language-item {
