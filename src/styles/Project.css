@@ -4,7 +4,6 @@
     padding: 6rem 2rem;
     width: 100%;
     margin: 0 auto;
-    background: linear-gradient(135deg, var(--background-color), rgba(0, 18, 32, 0.98));
 }
 
 .projects h2 {
@@ -219,7 +218,7 @@
     margin: 0.5rem 0;
     padding-left: 1.5rem;
     position: relative;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color);
 }
 
 .error-list li:before {

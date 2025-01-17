@@ -1,9 +1,8 @@
 .contact {
-    background: linear-gradient(to bottom, var(--background-color), rgba(0, 18, 32, 0.95));
     padding: 8rem 2rem 4rem;
-    /* Increased top padding to account for wave overlap */
     text-align: center;
     position: relative;
+    /* Remove background declaration */
 }
 
 .contact h2 {
@@ -93,7 +92,7 @@
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 15px rgba(88, 101, 242, 0.1);
+    box-shadow: var(--shadow-primary);
 }
 
 .submit-btn {
@@ -180,7 +179,7 @@
     padding: 2rem;
     border-radius: 16px;
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
     max-width: 400px;
     width: 90%;
     text-align: center;
