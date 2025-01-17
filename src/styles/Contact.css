@@ -1,11 +1,15 @@
 .contact {
     background: linear-gradient(to bottom, var(--background-color), rgba(0, 18, 32, 0.95));
-    padding: 4rem 2rem;
+    padding: 8rem 2rem 4rem;
+    /* Increased top padding to account for wave overlap */
     text-align: center;
     position: relative;
 }
 
 .contact h2 {
+    position: relative;
+    z-index: 2;
+    /* Ensure title is above waves */
     font-size: 2.5rem;
     margin-bottom: 3rem;
     background: linear-gradient(45deg, var(--primary-color), var(--hover-color));
@@ -14,9 +18,56 @@
     -webkit-text-fill-color: transparent;
 }
 
+.contact-container {
+    position: relative;
+    z-index: 2;
+    /* Ensure content is above waves */
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.contact-info {
+    text-align: left;
+}
+
+.contact-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.contact-info p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+.contact-reasons {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+}
+
+.contact-reasons li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contact-reasons i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
 .contact form {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -179,6 +230,28 @@ footer {
     }
 }
 
+.contact-waves-top {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 1;
+}
+
+.contact-waves-top svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+}
+
+.contact-waves-top .shape-fill {
+    fill: var(--primary-color);
+    filter: drop-shadow(0 0 4px rgba(88, 101, 242, 0.15));
+}
+
 @media (max-width: 768px) {
     .contact h2 {
         font-size: 2rem;
@@ -191,5 +264,18 @@ footer {
 
     .submit-btn {
         padding: 0.8rem 1.5rem;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .contact-info {
+        text-align: center;
+    }
+
+    .contact-reasons li {
+        justify-content: center;
     }
 }
