@@ -341,83 +341,63 @@
 /* Language Bar Styles */
 .languages-bar {
     display: flex;
-    height: 6px;
-    border-radius: 3px;
-    overflow: hidden;
-    margin: 1rem 0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: visible;
+    margin: 1.5rem 0;
     background: var(--glass-background);
     position: relative;
 }
 
 .language-item {
     height: 100%;
-    transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
     min-width: 2px;
     cursor: pointer;
-}
-
-.language-name {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    color: var(--text-color);
-    background: rgba(0, 0, 0, 0.8);
-    padding: 2px 6px;
-    border-radius: 4px;
-    pointer-events: none;
-    margin-bottom: 5px;
-}
-
-.language-item:hover .language-name {
-    opacity: 1;
+    transition: all 0.3s ease;
 }
 
 .language-tooltip {
     position: absolute;
-    bottom: calc(100% + 10px);
+    bottom: calc(100% + 8px);
     left: 50%;
-    transform: translateX(-50%) scale(0.9);
-    background: rgba(0, 0, 0, 0.9);
-    color: var(--text-color);
-    padding: 0.5rem 0.8rem;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    padding: 6px 10px;
     border-radius: 6px;
     font-size: 0.75rem;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    border: 1px solid var(--glass-border);
     z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.language-tooltip:after {
+.language-tooltip::after {
     content: '';
     position: absolute;
-    top: 100%;
+    bottom: -4px;
     left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: rgba(0, 0, 0, 0.9);
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: var(--glass-background);
+    border-right: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
 }
 
-.language-percentage {
-    color: rgba(255, 255, 255, 0.7);
+.language-item:hover {
+    transform: translateY(-2px);
 }
 
 .language-item:hover .language-tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) translateY(0);
 }
 
 /* Pagination Styles */

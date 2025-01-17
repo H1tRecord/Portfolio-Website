@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import '../styles/About.css';
 
 function About() {
@@ -10,6 +11,29 @@ function About() {
         { name: 'CSS3', icon: 'fab fa-css3-alt' }
     ];
 
+    useEffect(() => {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Stop observing once visible
+                }
+            });
+        }, observerOptions);
+
+        setTimeout(() => {
+            const elementsToAnimate = document.querySelectorAll('.about .animate-on-scroll');
+            elementsToAnimate.forEach(el => observer.observe(el));
+        }, 100);
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <section id="about" className="about">
             <div className="about-divider-top">
@@ -19,8 +43,8 @@ function About() {
             </div>
 
             <div className="about-content">
-                <h2 className="about-title">About Me</h2>
-                <p className="about-text">
+                <h2 className="about-title animate-on-scroll">About Me</h2>
+                <p className="about-text animate-on-scroll">
                     I'm a passionate developer focused on creating engaging web experiences.
                     Currently pursuing IT, I balance my studies with hands-on development work.
                     I enjoy exploring new technologies and building projects that challenge me
@@ -28,8 +52,8 @@ function About() {
                 </p>
 
                 <div className="skills-grid">
-                    {skills.map((skill, index) => (
-                        <div key={skill.name} className="skill-card">
+                    {skills.map((skill) => (
+                        <div key={skill.name} className="skill-card animate-on-scroll">
                             <i className={`${skill.icon} skill-icon`}></i>
                             <h3 className="skill-name">{skill.name}</h3>
                         </div>

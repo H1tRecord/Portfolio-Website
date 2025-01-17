@@ -61,8 +61,6 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    opacity: 0;
-    animation: fadeDown 0.5s ease forwards;
 }
 
 .about-text {
@@ -71,8 +69,6 @@
     line-height: 1.8;
     color: var(--text-color);
     font-size: 1.1rem;
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards 0.2s;
 }
 
 .skills-grid {
@@ -90,32 +86,37 @@
     padding: 1.5rem;
     transition: all 0.3s ease;
     opacity: 0;
-    animation: slideUp 0.5s ease forwards;
+    transform: scale(0.8);
+    transition: transform 0.3s ease, opacity 0.5s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Add animation delays for skill cards */
-.skills-grid>div:nth-child(1) {
-    animation-delay: 0.1s;
+.skill-card.visible {
+    opacity: 1;
+    transform: scale(1);
 }
 
-.skills-grid>div:nth-child(2) {
-    animation-delay: 0.2s;
+.skills-grid .skill-card:nth-child(1) {
+    transition-delay: 0.1s;
 }
 
-.skills-grid>div:nth-child(3) {
-    animation-delay: 0.3s;
+.skills-grid .skill-card:nth-child(2) {
+    transition-delay: 0.2s;
 }
 
-.skills-grid>div:nth-child(4) {
-    animation-delay: 0.4s;
+.skills-grid .skill-card:nth-child(3) {
+    transition-delay: 0.3s;
 }
 
-.skills-grid>div:nth-child(5) {
-    animation-delay: 0.5s;
+.skills-grid .skill-card:nth-child(4) {
+    transition-delay: 0.4s;
 }
 
-.skills-grid>div:nth-child(6) {
-    animation-delay: 0.6s;
+.skills-grid .skill-card:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+.skills-grid .skill-card:nth-child(6) {
+    transition-delay: 0.6s;
 }
 
 @keyframes fadeDown {
@@ -176,4 +177,17 @@
     .skills-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+/* Modify animation classes */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
 }

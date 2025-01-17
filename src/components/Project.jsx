@@ -13,13 +13,11 @@ function Project() {
     useEffect(() => {
         fetchProjects();
 
-        // Create Intersection Observer after projects are loaded
         const setupObserver = () => {
             const observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry, idx) => {
                         if (entry.isIntersecting) {
-                            // Add visible class immediately for items already in view
                             const card = entry.target;
                             const delay = idx * 100; // Stagger animation
 
@@ -44,7 +42,6 @@ function Project() {
             return observer;
         };
 
-        // Setup observer when projects are loaded
         let observer;
         if (!loading && projects.length > 0) {
             observer = setupObserver();
@@ -157,7 +154,7 @@ function Project() {
                             <h3 className="project-title">{project.name}</h3>
                             <p className="project-description">{project.description || 'No description available'}</p>
 
-                            {/* Language bar for each project */}
+                            {/* Update the languages bar section */}
                             <div className="languages-bar" role="list" aria-label="Project languages">
                                 {project.languages?.map(({ name, percentage }) => (
                                     <div
@@ -171,10 +168,7 @@ function Project() {
                                         aria-label={`${name}: ${percentage.toFixed(1)}%`}
                                     >
                                         <div className="language-tooltip">
-                                            {name}
-                                            <span className="language-percentage">
-                                                {percentage.toFixed(1)}%
-                                            </span>
+                                            {name} - {percentage.toFixed(1)}%
                                         </div>
                                     </div>
                                 ))}
