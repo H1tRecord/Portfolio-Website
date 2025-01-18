@@ -155,28 +155,58 @@
 
 /* Loading and Error States */
 .loading-container {
-    grid-column: 1 / -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 300px;
-    color: var(--text-color);
-    background: var(--glass-background);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    border: 1px solid var(--glass-border);
-    width: 100%;
+    gap: 1.5rem;
+    width: auto;
+    background: none;
+    border: none;
+    backdrop-filter: none;
 }
 
 .loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(88, 101, 242, 0.3);
-    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 3px solid transparent;
     border-top-color: var(--primary-color);
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
+    border-right-color: var(--primary-color);
+    border-radius: 50%;
+    animation: loadingSpin 1s ease infinite;
+}
+
+.loading-container p {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards 0.2s;
+}
+
+@keyframes loadingSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .error-card {
@@ -185,13 +215,98 @@
     backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 4rem 2rem;
     text-align: center;
     color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
+    min-height: 600px;
+    justify-content: center;
+}
+
+.error-image {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 12px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.error-card h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    background: linear-gradient(45deg, var(--primary-color), var(--hover-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.error-message {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.error-submessage {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@media (max-width: 768px) {
+    .error-card {
+        padding: 3rem 1rem;
+        min-height: 500px;
+    }
+
+    .error-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .error-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .error-message {
+        font-size: 1rem;
+    }
+
+    .error-submessage {
+        font-size: 0.9rem;
+    }
+
+    .error-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 
 .error-icon {
@@ -360,34 +475,44 @@
     position: relative;
     min-width: 2px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
-.language-tooltip {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+.language-item:hover {
+    transform: scaleY(1.2);
+}
+
+.tooltip-container {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.tooltip {
+    position: fixed;
     background: var(--glass-background);
     backdrop-filter: blur(10px);
-    padding: 6px 10px;
+    padding: 8px 12px;
     border-radius: 6px;
     font-size: 0.75rem;
     white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
     border: 1px solid var(--glass-border);
-    z-index: 100;
-    pointer-events: none;
+    color: var(--text-color);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    transform: translate(-50%, -100%);
+    z-index: 1000;
 }
 
-.language-tooltip::after {
+.tooltip::after {
     content: '';
     position: absolute;
-    bottom: -5px;
     left: 50%;
+    bottom: -4px;
     transform: translateX(-50%) rotate(45deg);
     width: 8px;
     height: 8px;
@@ -396,50 +521,89 @@
     border-bottom: 1px solid var(--glass-border);
 }
 
-.language-item:hover {
-    transform: scaleY(1.2);
-}
-
-.language-item:hover .language-tooltip {
-    opacity: 1;
-    visibility: visible;
-    bottom: 25px;
-    /* Adjusted hover position */
-}
-
 /* Pagination Styles */
 .pagination {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 0.5rem;
+    margin-top: 3rem;
     background: var(--glass-background);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
+    padding: 0.75rem;
+    border-radius: 16px;
     border: 1px solid var(--glass-border);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .page-btn {
-    background: var(--glass-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     border: 1px solid var(--glass-border);
+    background: transparent;
     color: var(--text-color);
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.page-btn.number-btn {
+    font-weight: 500;
+}
+
+.page-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.page-btn:not(:disabled):hover {
+    background: var(--glass-background);
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .page-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.05);
 }
 
-.page-btn:not(:disabled):hover {
-    background: var(--primary-color);
+.pagination-dots {
+    color: var(--text-color);
+    opacity: 0.7;
+    margin: 0 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .pagination {
+        padding: 0.5rem;
+        gap: 0.25rem;
+    }
+
+    .page-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.8rem;
+    }
+
+    .number-btn:not(.active) {
+        display: none;
+    }
+
+    .number-btn.active {
+        display: flex;
+    }
+
+    .pagination-dots {
+        display: flex;
+    }
 }
 
 .page-info {
@@ -535,5 +699,17 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes tooltipFade {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -90%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -100%);
     }
 }

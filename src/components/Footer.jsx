@@ -32,6 +32,15 @@ function Footer() {
                         <li><a href="#about">About</a></li>
                         <li><a href="#projects">Projects</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li>
+                            <a
+                                href="https://github.com/H1tRecord/Portfolio-Website"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <i className="fas fa-code"></i> Source Code
+                            </a>
+                        </li>
                     </ul>
                 </div>
 

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import '../styles/Project.css';
+import errorGif from '../assets/error.gif';
 
 function Project() {
     const [projects, setProjects] = useState([]);
@@ -7,6 +8,7 @@ function Project() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const projectsRef = useRef([]);
+    const [tooltip, setTooltip] = useState({ content: '', visible: false, x: 0, y: 0 });
 
     const projectsPerPage = 6;
 
@@ -54,6 +56,8 @@ function Project() {
     }, [loading, projects, currentPage]);
 
     const fetchProjects = async () => {
+
+
         try {
             const response = await fetch('https://api.github.com/users/H1tRecord/repos');
             const data = await response.json();
@@ -94,7 +98,6 @@ function Project() {
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
-        // Add a small delay to ensure state update before scrolling
         setTimeout(() => {
             const projectsSection = document.getElementById('projects');
             if (projectsSection) {
@@ -106,113 +109,212 @@ function Project() {
         }, 100);
     };
 
+    const handleLanguageHover = (e, language, percentage) => {
+        const rect = e.target.getBoundingClientRect();
+        setTooltip({
+            content: `${language} - ${percentage.toFixed(1)}%`,
+            visible: true,
+            x: rect.left + (rect.width / 2),
+            y: rect.top
+        });
+    };
+
+    const handleLanguageLeave = () => {
+        setTooltip(prev => ({ ...prev, visible: false }));
+    };
+
+    const renderPaginationButtons = () => {
+        const buttons = [];
+        const maxVisible = 5; // Maximum number of visible page buttons
+
+        // Previous button
+        buttons.push(
+            <button
+                key="prev"
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="page-btn"
+                aria-label="Previous page"
+            >
+                <i className="fas fa-chevron-left"></i>
+            </button>
+        );
+
+        // Calculate range of pages to show
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+        if (endPage - startPage + 1 < maxVisible) {
+            startPage = Math.max(1, endPage - maxVisible + 1);
+        }
+
+        // First page
+        if (startPage > 1) {
+            buttons.push(
+                <button
+                    key={1}
+                    onClick={() => paginate(1)}
+                    className="page-btn number-btn"
+                >
+                    1
+                </button>
+            );
+            if (startPage > 2) buttons.push(<span key="dots1" className="pagination-dots">...</span>);
+        }
+
+        // Page numbers
+        for (let i = startPage; i <= endPage; i++) {
+            buttons.push(
+                <button
+                    key={i}
+                    onClick={() => paginate(i)}
+                    className={`page-btn number-btn ${currentPage === i ? 'active' : ''}`}
+                    aria-current={currentPage === i ? 'page' : undefined}
+                >
+                    {i}
+                </button>
+            );
+        }
+
+        // Last page
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) buttons.push(<span key="dots2" className="pagination-dots">...</span>);
+            buttons.push(
+                <button
+                    key={totalPages}
+                    onClick={() => paginate(totalPages)}
+                    className="page-btn number-btn"
+                >
+                    {totalPages}
+                </button>
+            );
+        }
+
+        // Next button
+        buttons.push(
+            <button
+                key="next"
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="page-btn"
+                aria-label="Next page"
+            >
+                <i className="fas fa-chevron-right"></i>
+            </button>
+        );
+
+        return buttons;
+    };
+
     return (
         <section id="projects" className="projects">
-            <h2>Projects</h2>
-            <p className="section-caption">A collection of my latest works and experiments</p>
-            <div className="projects-grid">
-                {loading ? (
-                    <div className="loading-container">
-                        <div className="loading-spinner"></div>
-                        <p>Loading projects...</p>
+            <div className="tooltip-container">
+                {tooltip.visible && (
+                    <div
+                        className="tooltip"
+                        style={{
+                            left: `${tooltip.x}px`,
+                            top: `${tooltip.y - 10}px`
+                        }}
+                    >
+                        {tooltip.content}
                     </div>
-                ) : error ? (
-                    <div className="error-card">
-                        <i className="fas fa-exclamation-circle error-icon"></i>
-                        <h3>Unable to Load Projects</h3>
-                        <p>{error}</p>
-                        <p className="error-subtext">This could be due to:</p>
-                        <ul className="error-list">
-                            <li>Network connectivity issues</li>
-                            <li>GitHub API rate limiting</li>
-                            <li>Server temporarily unavailable</li>
-                        </ul>
-                        <div className="error-actions">
-                            <a
-                                href="https://github.com/H1tRecord?tab=repositories"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="github-link"
-                            >
-                                <i className="fab fa-github"></i> View My GitHub Profile
-                            </a>
-                            <button onClick={fetchProjects} className="retry-btn">
-                                <i className="fas fa-sync-alt"></i> Try Again
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    currentProjects.map((project, index) => (
-                        <a
-                            href={project.html_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="project-card"
-                            key={project.id}
-                            data-index={index}
-                        >
-                            <h3 className="project-title">{project.name}</h3>
-                            <p className="project-description">{project.description || 'No description available'}</p>
-
-                            <div className="languages-bar" role="list" aria-label="Project languages">
-                                {project.languages?.map(({ name, percentage }) => (
-                                    <div
-                                        key={name}
-                                        className="language-item"
-                                        style={{
-                                            width: `${percentage}%`,
-                                            backgroundColor: getLanguageColor(name)
-                                        }}
-                                        role="listitem"
-                                        aria-label={`${name}: ${percentage.toFixed(1)}%`}
-                                    >
-                                        <div className="language-tooltip">
-                                            {name} - {percentage.toFixed(1)}%
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="project-meta">
-                                <div className="project-stats">
-                                    <span><i className="far fa-star"></i> {project.stargazers_count}</span>
-                                    <span><i className="fas fa-code-branch"></i> {project.forks_count}</span>
-                                </div>
-                                <span className="project-updated">
-                                    Updated: {new Date(project.updated_at).toLocaleDateString()}
-                                </span>
-                            </div>
-                        </a>
-                    ))
                 )}
             </div>
+            <h2>Projects</h2>
+            <p className="section-caption">A collection of my latest works and experiments</p>
+            {loading ? (
+                <div className="loading-container">
+                    <div className="loading-spinner" aria-label="Loading projects"></div>
+                    <p>Loading projects...</p>
+                </div>
+            ) : (
+                <div className="projects-grid">
+                    {error ? (
+                        <div className="error-card">
+                            <img
+                                src={errorGif}
+                                alt="Error illustration"
+                                className="error-image"
+                                width="300"
+                                height="300"
+                            />
+                            <h3>Whoops! GitHub Rate Limit</h3>
+                            <p className="error-message">
+                                Looks like HitRecord broke GitHub's API rate limit for the 420th time trying to debug stuff
+                                <br />
+                                <span className="error-submessage">
+                                    Don't worry though, you can still check out all my projects directly on GitHub
+                                </span>
+                            </p>
+                            <div className="error-actions">
+                                <a
+                                    href="https://github.com/H1tRecord?tab=repositories"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="github-link"
+                                >
+                                    <i className="fab fa-github"></i> Browse Projects on GitHub
+                                </a>
+                                <button onClick={fetchProjects} className="retry-btn">
+                                    <i className="fas fa-sync-alt"></i> Retry Loading
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        currentProjects.map((project, index) => (
+                            <a
+                                href={project.html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="project-card"
+                                key={project.id}
+                                data-index={index}
+                            >
+                                <h3 className="project-title">{project.name}</h3>
+                                <p className="project-description">{project.description || 'No description available'}</p>
 
-            {!loading && !error && (
-                <div className="pagination">
-                    <button
-                        onClick={() => paginate(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="page-btn"
-                    >
-                        <i className="fas fa-chevron-left"></i>
-                    </button>
-                    <span className="page-info">
-                        Page {currentPage} of {totalPages}
-                    </span>
-                    <button
-                        onClick={() => paginate(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className="page-btn"
-                    >
-                        <i className="fas fa-chevron-right"></i>
-                    </button>
+                                <div className="languages-bar" role="list" aria-label="Project languages">
+                                    {project.languages?.map(({ name, percentage }) => (
+                                        <div
+                                            key={name}
+                                            className="language-item"
+                                            style={{
+                                                width: `${percentage}%`,
+                                                backgroundColor: getLanguageColor(name)
+                                            }}
+                                            role="listitem"
+                                            aria-label={`${name}: ${percentage.toFixed(1)}%`}
+                                            onMouseEnter={(e) => handleLanguageHover(e, name, percentage)}
+                                            onMouseLeave={handleLanguageLeave}
+                                        />
+                                    ))}
+                                </div>
+
+                                <div className="project-meta">
+                                    <div className="project-stats">
+                                        <span><i className="far fa-star"></i> {project.stargazers_count}</span>
+                                        <span><i className="fas fa-code-branch"></i> {project.forks_count}</span>
+                                    </div>
+                                    <span className="project-updated">
+                                        Updated: {new Date(project.updated_at).toLocaleDateString()}
+                                    </span>
+                                </div>
+                            </a>
+                        ))
+                    )}
+                </div>
+            )}
+
+            {!loading && !error && totalPages > 1 && (
+                <div className="pagination" role="navigation" aria-label="Projects pagination">
+                    {renderPaginationButtons()}
                 </div>
             )}
         </section>
     );
 }
 
-// Helper function to get language colors
 function getLanguageColor(language) {
     const colors = {
         JavaScript: '#f1e05a',
