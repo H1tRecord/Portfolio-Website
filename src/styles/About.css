@@ -477,7 +477,7 @@
 
 @media (max-width: 768px) {
     .about {
-        padding: 4rem 1rem;
+        padding: 3rem 1rem;
     }
 
     .about-title {
@@ -494,7 +494,7 @@
 
     .about-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .interests-grid {
@@ -568,6 +568,131 @@
     .skills-header h3 {
         font-size: 1.8rem;
     }
+
+    .about-content {
+        padding: 0;
+    }
+
+    .intro-card {
+        padding: 1.2rem;
+    }
+
+    .intro-header {
+        margin-bottom: 1rem;
+    }
+
+    .intro-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .intro-header h3 {
+        font-size: 1.4rem;
+    }
+
+    .intro-content p {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .intro-tags {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .intro-tags span {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+    }
+
+    .learning-list {
+        gap: 0.8rem;
+    }
+
+    .learning-item {
+        padding: 0.8rem;
+    }
+
+    .learning-icon {
+        font-size: 1.4rem;
+    }
+
+    .learning-info h4 {
+        font-size: 1rem;
+    }
+
+    .learning-info span {
+        font-size: 0.8rem;
+    }
+
+    .skills-section {
+        padding: 1.2rem;
+        margin-top: 1rem;
+    }
+
+    .skills-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .skills-icon {
+        font-size: 1.4rem;
+        padding: 0.6rem;
+    }
+
+    .skills-header h3 {
+        font-size: 1.6rem;
+    }
+
+    .skills-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .category-header h4 {
+        font-size: 1.1rem;
+    }
+
+    .category-count {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+
+    .skill-card {
+        padding: 1rem;
+    }
+
+    .skill-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .skill-name {
+        font-size: 0.9rem;
+    }
+
+    .interests-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+
+    .interests-grid span {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+    }
+
+    .about-card {
+        padding: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .about-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
 }
 
 /* Tablet Improvements */
@@ -582,6 +707,25 @@
 
     .intro-tags {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .interests-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-title {
+        font-size: 1.8rem;
+    }
+
+    .about-text {
+        font-size: 0.9rem;
+        padding: 1rem;
     }
 }
 

@@ -307,6 +307,19 @@
         flex-direction: column;
         gap: 1rem;
     }
+
+    .languages-bar {
+        display: none;
+    }
+
+    .project-meta {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .project-description {
+        margin-bottom: 0;
+    }
 }
 
 .error-icon {
