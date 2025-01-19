@@ -16,6 +16,7 @@ function ThemeSwitcher() {
     const [warningCount, setWarningCount] = useState(0);
     const [showVideo, setShowVideo] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [videoReady, setVideoReady] = useState(false);
 
     const warningMessages = [
         {
@@ -38,9 +39,20 @@ function ThemeSwitcher() {
     ];
 
     useEffect(() => {
+        // Load theme
         const savedTheme = localStorage.getItem('theme') || 'dark';
         setCurrentTheme(savedTheme);
         document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Preload video
+        const preloadVideo = document.getElementById('preload-flash-video');
+        if (preloadVideo) {
+            preloadVideo.load();
+            preloadVideo.oncanplaythrough = () => {
+                setVideoReady(true);
+                setLoading(false);
+            };
+        }
     }, []);
 
     const handleLightModeAttempt = () => {
@@ -48,10 +60,10 @@ function ThemeSwitcher() {
             setWarningCount(prev => prev + 1);
         } else {
             setShowVideo(true);
-            setLoading(true);
             const video = document.getElementById('flash-video');
             if (video) {
-                video.play().catch(err => console.log('Video autoplay failed:', err));
+                video.currentTime = 0;
+                video.play().catch(err => console.log('Video playback failed:', err));
             }
             setTimeout(() => {
                 setShowVideo(false);
@@ -79,6 +91,13 @@ function ThemeSwitcher() {
 
     return (
         <>
+            <video
+                id="preload-flash-video"
+                src={flashVideo}
+                style={{ display: 'none' }}
+                preload="auto"
+            />
+
             <div className="theme-switcher">
                 <button
                     className="theme-btn"
@@ -124,15 +143,13 @@ function ThemeSwitcher() {
                 </div>
             )}
 
-            {showVideo && (
+            {showVideo && videoReady && (
                 <div className="fullscreen-video">
-                    {loading && <div className="loading-spinner"></div>}
                     <video
                         id="flash-video"
                         autoPlay
                         playsInline
                         src={flashVideo}
-                        onCanPlay={handleVideoLoad}
                         style={{
                             width: '100vw',
                             height: '100vh',
@@ -140,8 +157,7 @@ function ThemeSwitcher() {
                             position: 'fixed',
                             top: 0,
                             left: 0,
-                            zIndex: 9999,
-                            display: loading ? 'none' : 'block'
+                            zIndex: 9999
                         }}
                     />
                 </div>
