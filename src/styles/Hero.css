@@ -4,17 +4,7 @@
     margin: 0 auto;
 }
 
-.hero-title {
-    color: #2c3e50;
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.hero-text {
-    color: #34495e;
-    line-height: 1.6;
-    font-size: 1.1rem;
-}
+/* Remove unused hero-title and hero-text */
 
 .hero {
     position: relative;
@@ -25,7 +15,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Remove background declarations and ::before pseudo-element */
 }
 
 .hero-content {
@@ -160,55 +149,41 @@
     z-index: 2;
 }
 
-.hero-waves-top {
+.hero-waves-top,
+.hero-waves-bottom {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     overflow: hidden;
     line-height: 0;
+}
+
+.hero-waves-top {
+    top: 0;
     transform: translateY(-100%);
     animation: slideDown 1s ease-out forwards;
     animation-delay: 0.5s;
 }
 
-.hero-waves-top svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 150px;
-}
-
-.hero-waves-top .shape-fill {
-    fill: var(--primary-color);
-    filter: drop-shadow(0 0 5px rgba(88, 101, 242, 0.2));
-}
-
 .hero-waves-bottom {
-    position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
 }
 
+.hero-waves-top svg,
 .hero-waves-bottom svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
     height: 150px;
+}
+
+.hero-waves-bottom svg {
     transform: rotate(180deg);
 }
 
+.hero-waves-top .shape-fill,
 .hero-waves-bottom .shape-fill {
     fill: var(--primary-color);
     filter: drop-shadow(0 0 5px rgba(88, 101, 242, 0.2));
-}
-
-.hero-waves-bottom path {
-    animation: wave 8s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-    transform-origin: center;
 }
 
 /* Animations */
@@ -287,16 +262,6 @@
     }
 }
 
-@keyframes slideUpFlipped {
-    from {
-        transform: translateY(100%);
-    }
-
-    to {
-        transform: translateY(0);
-    }
-}
-
 @keyframes wave {
     0% {
         d: path("M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z");
@@ -340,13 +305,5 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
-
-    .info-cards {
-        position: static;
-        flex-direction: row;
-        transform: none;
-        margin-top: 1rem;
-        right: auto;
     }
 }

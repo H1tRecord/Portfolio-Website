@@ -9,7 +9,6 @@ import ThemeSwitcher from "./components/ThemeSwitcher"
 
 function App() {
   useEffect(() => {
-    // Set initial theme on app load
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.documentElement.style.setProperty('scroll-padding-top', '80px');

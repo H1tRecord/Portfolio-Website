@@ -7,7 +7,6 @@ function Project() {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const projectsRef = useRef([]);
     const [tooltip, setTooltip] = useState({ content: '', visible: false, x: 0, y: 0 });
 
     const projectsPerPage = 6;

@@ -179,30 +179,6 @@
     background: var(--primary-color);
 }
 
-.timeline {
-    margin-top: 1.5rem;
-}
-
-.timeline-item {
-    position: relative;
-    padding-left: 2rem;
-    margin-bottom: 1.5rem;
-    border-left: 2px solid var(--primary-color);
-}
-
-.timeline-item .date {
-    color: var(--primary-color);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    display: block;
-}
-
-.timeline-item h4 {
-    color: var(--text-color);
-    font-size: 1.1rem;
-    margin-bottom: 0.3rem;
-}
-
 .interests-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -307,24 +283,6 @@
     font-size: 1rem;
 }
 
-.intro-header {
-    margin-bottom: 1.5rem;
-}
-
-.intro-header i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.intro-header h3 {
-    font-size: 1.8rem;
-    background: linear-gradient(45deg, var(--primary-color), var(--hover-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 .intro-avatar {
     width: 80px;
     height: 80px;
@@ -387,11 +345,6 @@
 .learning-info span {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
-}
-
-.progress-bar,
-.progress {
-    display: none;
 }
 
 .skills-section {
@@ -548,16 +501,17 @@
     }
 
     .about-card {
-        margin-bottom: 1.5rem;
-        padding: 1.5rem;
+        padding: 1.2rem;
+        margin-bottom: 1.2rem;
     }
 
     .skills-section {
-        padding: 1.5rem;
+        padding: 1.2rem;
+        margin-top: 1rem;
     }
 
     .skills-header {
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .skills-title-wrap {

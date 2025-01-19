@@ -25,15 +25,15 @@ function ThemeSwitcher() {
         },
         {
             title: "Last Chance!",
-            message: "9 out of 10 developers prefer dark mode. Don't be that one... 🤓"
+            message: "Come on light mode is not that great... 😢"
         },
         {
             title: "FINAL WARNING ⚠️",
-            message: "You've been warned! Preparing your eyes for permanent damage..."
+            message: "You've been warned! Prepare your eyes for permanent damage..."
         },
         {
             title: "Are you Sure???",
-            message: "I don't like light mode... 😢",
+            message: "I'm doing you a favor here... 😢",
             disclaimer: "Disclaimer: There will be loud sounds."
         }
     ];

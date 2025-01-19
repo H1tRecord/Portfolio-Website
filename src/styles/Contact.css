@@ -47,10 +47,6 @@
     opacity: 0;
 }
 
-.contact-info h3.animate {
-    animation: slideRight 0.8s ease forwards;
-}
-
 .contact-info p {
     margin-bottom: 1.5rem;
     line-height: 1.6;
@@ -58,6 +54,30 @@
     opacity: 0;
 }
 
+.contact-waves-top {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 1;
+}
+
+.contact-waves-top svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+}
+
+.contact-waves-top .shape-fill {
+    fill: var(--primary-color);
+    filter: drop-shadow(0 0 4px rgba(88, 101, 242, 0.15));
+}
+
+/* Animation classes */
+.contact-info h3.animate,
 .contact-info p.animate {
     animation: slideRight 0.8s ease forwards;
 }
@@ -80,51 +100,12 @@
     animation: slideRight 0.8s ease forwards;
 }
 
-.contact-reasons li:nth-child(1) {
-    animation-delay: 0.6s;
-}
-
-.contact-reasons li:nth-child(1).animate {
-    animation-delay: 0.6s;
-}
-
-.contact-reasons li:nth-child(2) {
-    animation-delay: 0.7s;
-}
-
-.contact-reasons li:nth-child(2).animate {
-    animation-delay: 0.7s;
-}
-
-.contact-reasons li:nth-child(3) {
-    animation-delay: 0.8s;
-}
-
-.contact-reasons li:nth-child(3).animate {
-    animation-delay: 0.8s;
-}
-
-.contact-reasons li:nth-child(4) {
-    animation-delay: 0.9s;
-}
-
-.contact-reasons li:nth-child(4).animate {
-    animation-delay: 0.9s;
-}
-
-.contact-reasons li:nth-child(5) {
-    animation-delay: 1.0s;
-}
-
-.contact-reasons li:nth-child(5).animate {
-    animation-delay: 1.0s;
-}
-
 .contact-reasons i {
     color: var(--primary-color);
     font-size: 1.2rem;
 }
 
+/* Form styles */
 .contact form {
     max-width: 600px;
     margin: 0;
@@ -140,30 +121,6 @@
 
 .form-group.animate {
     animation: slideLeft 0.8s ease forwards;
-}
-
-.form-group:nth-child(1) {
-    animation-delay: 0.6s;
-}
-
-.form-group:nth-child(1).animate {
-    animation-delay: 0.6s;
-}
-
-.form-group:nth-child(2) {
-    animation-delay: 0.7s;
-}
-
-.form-group:nth-child(2).animate {
-    animation-delay: 0.7s;
-}
-
-.form-group:nth-child(3) {
-    animation-delay: 0.8s;
-}
-
-.form-group:nth-child(3).animate {
-    animation-delay: 0.8s;
 }
 
 .form-group input,
@@ -190,6 +147,7 @@
     height: 150px;
 }
 
+/* Submit button styles */
 .submit-btn {
     background: var(--primary-color);
     color: var(--text-color);
@@ -207,10 +165,6 @@
 .submit-btn:hover:not(:disabled) {
     background: var(--hover-color);
     transform: translateY(-2px);
-}
-
-.submit-btn:active:not(:disabled) {
-    transform: scale(0.95);
 }
 
 .submit-btn:disabled {
@@ -231,6 +185,7 @@
     animation: spin 0.8s linear infinite;
 }
 
+/* Status message styles */
 .form-status {
     padding: 1rem;
     border-radius: 8px;
@@ -249,14 +204,7 @@
     color: #ff4444;
 }
 
-footer {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--glass-border);
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-}
-
+/* Animations */
 @keyframes spin {
     to {
         transform: translateY(-50%) rotate(360deg);
@@ -309,40 +257,10 @@ footer {
     }
 }
 
-.contact-waves-top {
-    position: absolute;
-    top: -1px;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-    z-index: 1;
-}
-
-.contact-waves-top svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 150px;
-}
-
-.contact-waves-top .shape-fill {
-    fill: var(--primary-color);
-    filter: drop-shadow(0 0 4px rgba(88, 101, 242, 0.15));
-}
-
+/* Mobile styles */
 @media (max-width: 768px) {
     .contact h2 {
         font-size: 2rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        padding: 0.8rem;
-    }
-
-    .submit-btn {
-        padding: 0.8rem 1.5rem;
     }
 
     .contact-container {
@@ -356,6 +274,15 @@ footer {
 
     .contact-reasons li {
         justify-content: center;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.8rem;
+    }
+
+    .submit-btn {
+        padding: 0.8rem 1.5rem;
     }
 
     .contact-info h3,
