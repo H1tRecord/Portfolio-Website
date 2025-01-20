@@ -312,13 +312,23 @@
         display: none;
     }
 
+    .tooltip-container {
+        display: none;
+    }
+
     .project-meta {
-        margin-top: 1rem;
-        padding-top: 1rem;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
     }
 
     .project-description {
-        margin-bottom: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .project-card .languages-bar,
+    .project-card.visible .languages-bar,
+    .tooltip-container {
+        display: none !important;
     }
 }
 
