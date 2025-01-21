@@ -55,14 +55,22 @@ function Project() {
     }, [loading, projects, currentPage]);
 
     const fetchProjects = async () => {
-
+        // Clear previous error state and set loading
+        setError(null);
+        setLoading(true);
 
         try {
             const response = await fetch('https://api.github.com/users/H1tRecord/repos');
+            if (!response.ok) {
+                throw new Error(`GitHub API responded with status ${response.status}`);
+            }
             const data = await response.json();
 
             const projectsWithLanguages = await Promise.all(data.map(async (repo) => {
                 const langResponse = await fetch(repo.languages_url);
+                if (!langResponse.ok) {
+                    throw new Error('Failed to fetch repository languages');
+                }
                 const languages = await langResponse.json();
                 const totalBytes = Object.values(languages).reduce((a, b) => a + b, 0);
 
@@ -85,7 +93,8 @@ function Project() {
             setProjects(sortedProjects);
             setLoading(false);
         } catch (err) {
-            setError('Failed to load projects');
+            console.error('Error fetching projects:', err);
+            setError(err.message || 'Failed to load projects');
             setLoading(false);
         }
     };
