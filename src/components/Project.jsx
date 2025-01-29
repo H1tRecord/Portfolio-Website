@@ -10,6 +10,9 @@ function Project() {
     const [tooltip, setTooltip] = useState({ content: '', visible: false, x: 0, y: 0 });
 
     const projectsPerPage = 6;
+    const CACHE_DURATION = 1000 * 60 * 60; // 1 hour cache
+    const lastFetchRef = useRef(0);
+    const loadingRef = useRef(false);
 
     useEffect(() => {
         fetchProjects();
@@ -55,40 +58,108 @@ function Project() {
     }, [loading, projects, currentPage]);
 
     const fetchProjects = async () => {
-
+        if (loadingRef.current) return;
 
         try {
+            // Check cache first
+            const cached = localStorage.getItem('githubProjects');
+            const cacheTimestamp = localStorage.getItem('githubProjectsTimestamp');
+            const now = Date.now();
+
+            // If we have valid cache, use it
+            if (cached && cacheTimestamp && now - Number(cacheTimestamp) < CACHE_DURATION) {
+                const parsedData = JSON.parse(cached);
+                setProjects(parsedData);
+                setLoading(false);
+                return;
+            }
+
+            // Throttle requests to once per minute
+            if (now - lastFetchRef.current < 60000) {
+                throw new Error('Please wait a moment before refreshing');
+            }
+
+            lastFetchRef.current = now;
+            loadingRef.current = true;
+            setLoading(true);
+
             const response = await fetch('https://api.github.com/users/H1tRecord/repos');
+            if (!response.ok) {
+                throw new Error(response.status === 403 ? 'Rate limit exceeded' : 'Failed to fetch repositories');
+            }
+
             const data = await response.json();
+            const projectsWithLanguages = await Promise.all(
+                data.map(async (repo) => {
+                    try {
+                        // Check language cache
+                        const langCache = localStorage.getItem(`lang_${repo.id}`);
+                        if (langCache) {
+                            return { ...repo, languages: JSON.parse(langCache) };
+                        }
 
-            const projectsWithLanguages = await Promise.all(data.map(async (repo) => {
-                const langResponse = await fetch(repo.languages_url);
-                const languages = await langResponse.json();
-                const totalBytes = Object.values(languages).reduce((a, b) => a + b, 0);
+                        const langResponse = await fetch(repo.languages_url);
+                        if (!langResponse.ok) return { ...repo, languages: [] };
 
-                const languagePercentages = Object.entries(languages).map(([name, bytes]) => ({
-                    name,
-                    percentage: (bytes / totalBytes) * 100
-                })).sort((a, b) => b.percentage - a.percentage);
+                        const languages = await langResponse.json();
+                        const totalBytes = Object.values(languages).reduce((a, b) => a + b, 0);
+                        const languagePercentages = Object.entries(languages)
+                            .map(([name, bytes]) => ({
+                                name,
+                                percentage: (bytes / totalBytes) * 100
+                            }))
+                            .sort((a, b) => b.percentage - a.percentage);
 
-                return {
-                    ...repo,
-                    languages: languagePercentages
-                };
-            }));
+                        // Cache language data
+                        localStorage.setItem(`lang_${repo.id}`, JSON.stringify(languagePercentages));
+                        return { ...repo, languages: languagePercentages };
+                    } catch (err) {
+                        return { ...repo, languages: [] };
+                    }
+                })
+            );
 
-            // Sort by stars
             const sortedProjects = projectsWithLanguages.sort((a, b) =>
                 b.stargazers_count - a.stargazers_count
             );
 
+            // Cache the results
+            localStorage.setItem('githubProjects', JSON.stringify(sortedProjects));
+            localStorage.setItem('githubProjectsTimestamp', String(now));
+
             setProjects(sortedProjects);
-            setLoading(false);
+            setError(null);
         } catch (err) {
-            setError('Failed to load projects');
+            setError(err.message || 'Failed to load projects');
+            setProjects([]);
+
+            // Use cached data as fallback if available
+            const cached = localStorage.getItem('githubProjects');
+            if (cached) {
+                setProjects(JSON.parse(cached));
+            }
+        } finally {
+            loadingRef.current = false;
             setLoading(false);
         }
     };
+
+    // Clean up old cache on mount
+    useEffect(() => {
+        const now = Date.now();
+        const timestamp = localStorage.getItem('githubProjectsTimestamp');
+        if (timestamp && now - Number(timestamp) > CACHE_DURATION) {
+            localStorage.removeItem('githubProjects');
+            localStorage.removeItem('githubProjectsTimestamp');
+            // Clean up language caches
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key?.startsWith('lang_')) {
+                    localStorage.removeItem(key);
+                }
+            }
+        }
+    }, []);
 
     const indexOfLastProject = currentPage * projectsPerPage;
     const indexOfFirstProject = indexOfLastProject - projectsPerPage;
