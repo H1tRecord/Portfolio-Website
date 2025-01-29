@@ -34,10 +34,10 @@ function Contact() {
 
         try {
             await emailjs.sendForm(
-                'service_nkon5ks',
-                'template_kfx8l27',
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
                 form.current,
-                'R3uZwgNsoClr2lEeu'
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
             );
 
             setFormStatus({
