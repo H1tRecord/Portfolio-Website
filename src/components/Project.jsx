@@ -8,9 +8,11 @@ function Project() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [tooltip, setTooltip] = useState({ content: '', visible: false, x: 0, y: 0 });
+    const [sectionVisible, setSectionVisible] = useState(false);
+    const sectionRef = useRef(null);
 
     const projectsPerPage = 6;
-    const CACHE_DURATION = 1000 * 60 * 60; // 1 hour cache
+    const CACHE_DURATION = 1000 * 60 * 60 * 12; // 12 hour cache
     const lastFetchRef = useRef(0);
     const loadingRef = useRef(false);
 
@@ -23,7 +25,8 @@ function Project() {
                     entries.forEach((entry, idx) => {
                         if (entry.isIntersecting) {
                             const card = entry.target;
-                            const delay = idx * 100;
+                            const cached = localStorage.getItem('githubProjects');
+                            const delay = cached ? 0 : idx * 100;
 
                             setTimeout(() => {
                                 card.classList.add('visible');
@@ -48,6 +51,14 @@ function Project() {
         let observer;
         if (!loading && projects.length > 0) {
             observer = setupObserver();
+            const cached = localStorage.getItem('githubProjects');
+            if (cached) {
+                setTimeout(() => {
+                    document.querySelectorAll('.project-card').forEach((card, idx) => {
+                        card.classList.add('visible');
+                    });
+                }, 0);
+            }
         }
 
         return () => {
@@ -56,6 +67,26 @@ function Project() {
             }
         };
     }, [loading, projects, currentPage]);
+
+    useEffect(() => {
+        const sectionObserver = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setSectionVisible(true);
+                    sectionObserver.disconnect();
+                }
+            },
+            {
+                threshold: 0.1
+            }
+        );
+
+        if (sectionRef.current) {
+            sectionObserver.observe(sectionRef.current);
+        }
+
+        return () => sectionObserver.disconnect();
+    }, []);
 
     const fetchProjects = async () => {
         if (loadingRef.current) return;
@@ -182,7 +213,7 @@ function Project() {
     const handleLanguageHover = (e, language, percentage) => {
         const rect = e.target.getBoundingClientRect();
         setTooltip({
-            content: `${language} - ${percentage.toFixed(1)}%`,
+            content: language ? `${language} - ${percentage.toFixed(1)}%` : '✨ UNKNOWN MAGICAL CODE✨',
             visible: true,
             x: rect.left + (rect.width / 2),
             y: rect.top
@@ -277,7 +308,7 @@ function Project() {
     };
 
     return (
-        <section id="projects" className="projects">
+        <section id="projects" className="projects" ref={sectionRef}>
             <div className="tooltip-container">
                 {tooltip.visible && (
                     <div
@@ -291,8 +322,10 @@ function Project() {
                     </div>
                 )}
             </div>
-            <h2>Projects</h2>
-            <p className="section-caption">A collection of my latest works and experiments</p>
+            <h2 className={sectionVisible ? 'visible' : ''}>Projects</h2>
+            <p className={`section-caption ${sectionVisible ? 'visible' : ''}`}>
+                A collection of my latest works and experiments
+            </p>
             {loading ? (
                 <div className="loading-container">
                     <div className="loading-spinner" aria-label="Loading projects"></div>
@@ -345,20 +378,31 @@ function Project() {
                                 <p className="project-description">{project.description || 'No description available'}</p>
 
                                 <div className="languages-bar" role="list" aria-label="Project languages">
-                                    {project.languages?.map(({ name, percentage }) => (
+                                    {project.languages?.length > 0 ? (
+                                        project.languages.map(({ name, percentage }) => (
+                                            <div
+                                                key={name}
+                                                className="language-item"
+                                                style={{
+                                                    width: `${percentage}%`,
+                                                    backgroundColor: getLanguageColor(name)
+                                                }}
+                                                role="listitem"
+                                                aria-label={`${name}: ${percentage.toFixed(1)}%`}
+                                                onMouseEnter={(e) => handleLanguageHover(e, name, percentage)}
+                                                onMouseLeave={handleLanguageLeave}
+                                            />
+                                        ))
+                                    ) : (
                                         <div
-                                            key={name}
-                                            className="language-item"
-                                            style={{
-                                                width: `${percentage}%`,
-                                                backgroundColor: getLanguageColor(name)
-                                            }}
+                                            className="language-item rainbow"
+                                            style={{ width: '100%' }}
                                             role="listitem"
-                                            aria-label={`${name}: ${percentage.toFixed(1)}%`}
-                                            onMouseEnter={(e) => handleLanguageHover(e, name, percentage)}
+                                            aria-label="Unknown language"
+                                            onMouseEnter={(e) => handleLanguageHover(e, null, null)}
                                             onMouseLeave={handleLanguageLeave}
                                         />
-                                    ))}
+                                    )}
                                 </div>
 
                                 <div className="project-meta">

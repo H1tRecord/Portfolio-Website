@@ -16,7 +16,12 @@
     -webkit-text-fill-color: transparent;
     opacity: 0;
     transform: translateY(-20px);
-    animation: dropDown 0.6s ease forwards;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.projects h2.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .section-caption {
@@ -24,6 +29,14 @@
     color: var(--text-color);
     margin: -1rem 0 3rem;
     text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+
+.section-caption.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .projects-grid {
@@ -51,16 +64,16 @@
     text-decoration: none;
     color: var(--text-color);
     min-height: 200px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transition-property: transform, opacity, box-shadow, border-color;
     opacity: 0;
     transform: scale(0.95) translateY(20px);
-    will-change: transform, opacity;
 }
 
 .project-card.visible {
     opacity: 1;
     transform: scale(1) translateY(0);
+    transition-duration: 0.2s;
 }
 
 .project-card:hover {
@@ -496,6 +509,25 @@
 
 .language-item:hover {
     transform: scaleY(1.2);
+}
+
+.language-item.rainbow {
+    background: linear-gradient(270deg,
+            #ff0000, #ff8700, #ffd300, #deff0a,
+            #a4ff0a, #0aff99, #0aefff, #147df5,
+            #580aff, #be0aff, #ff0000);
+    background-size: 200% 100%;
+    animation: rainbow 4s linear infinite;
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: -200% 50%;
+    }
 }
 
 .tooltip-container {
